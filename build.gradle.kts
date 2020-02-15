@@ -34,12 +34,19 @@ tasks.withType<KotlinCompile> {
 }
 
 publishing {
-    publications {
-        create<MavenPublication>("default") {
-            from(components["java"])
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/dkurata38/maven")
+            credentials {
+                username = project.findProperty("gpr.user").toString()  ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.token").toString() ?: System.getenv("PASSWORD")
+            }
         }
     }
-    repositories {
-        mavenLocal()
+    publications {
+        create<MavenPublication>("") {
+            from(components["java"])
+        }
     }
 }
