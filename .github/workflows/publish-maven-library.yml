@@ -13,7 +13,7 @@ jobs:
     - name: Publish Maven Library
       env: 
         USERNAME: d.kurata.38@gmail.com
-        PASSWORD: ${{ secrets.MAVEN_DEPLOY_TOKEN }}
+        PASSWORD: ${{ secrets.GITHUB_TOKEN }}
       uses: docker://openjdk:11
       with: 
         args: "./gradlew publish"
