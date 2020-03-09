@@ -50,6 +50,9 @@ class SeparateSubPackagesPlugin : PluginAdapter() {
 		if (introspectedTable.baseRecordType != null) {
 			introspectedTable.baseRecordType = typeToSubpackageType(introspectedTable.baseRecordType, tableName)
 		}
+		if (introspectedTable.recordWithBLOBsType != null) {
+			introspectedTable.recordWithBLOBsType = typeToSubpackageType(introspectedTable.recordWithBLOBsType, tableName)
+		}
 		if (introspectedTable.myBatis3JavaMapperType != null) {
 			introspectedTable.myBatis3JavaMapperType = typeToSubpackageType(introspectedTable.myBatis3JavaMapperType, tableName)
 		}
