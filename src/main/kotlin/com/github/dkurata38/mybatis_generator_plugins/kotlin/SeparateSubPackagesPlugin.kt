@@ -65,6 +65,16 @@ class SeparateSubPackagesPlugin : PluginAdapter() {
 			introspectedTable.myBatis3SqlProviderType = typeToSubpackageType(introspectedTable.myBatis3SqlProviderType, tableName)
 		}
 
+		// MyBatisDynamicSQL
+		if (introspectedTable.myBatisDynamicSqlSupportType != null) {
+			introspectedTable.myBatisDynamicSqlSupportType = typeToSubpackageType(introspectedTable.myBatisDynamicSqlSupportType, tableName)
+		}
+
+		//MyBatis3Kotlin
+		if (introspectedTable.kotlinRecordType != null) {
+			introspectedTable.kotlinRecordType = typeToSubpackageType(introspectedTable.kotlinRecordType, tableName)
+		}
+
 //		introspectedTable.myBatisDynamicSqlSupportType = typeToSubpackageType(introspectedTable.myBatisDynamicSqlSupportType, tableName)
 //		super.initialized(introspectedTable)
 	}
