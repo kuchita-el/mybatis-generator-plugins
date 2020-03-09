@@ -46,6 +46,7 @@ class SeparateSubPackagesPlugin : PluginAdapter() {
 //		if (introspectedTable.context.sqlMapGeneratorConfiguration != null) {
 //			introspectedTable.context.sqlMapGeneratorConfiguration.targetPackage = typeToSubpackageType(introspectedTable.context.sqlMapGeneratorConfiguration.targetPackage, tableName)
 //		}
+		// MyBatis3
 		if (introspectedTable.baseRecordType != null) {
 			introspectedTable.baseRecordType = typeToSubpackageType(introspectedTable.baseRecordType, tableName)
 		}
@@ -55,15 +56,15 @@ class SeparateSubPackagesPlugin : PluginAdapter() {
 		if (introspectedTable.exampleType != null) {
 			introspectedTable.exampleType = typeToSubpackageType(introspectedTable.exampleType, tableName)
 		}
+		// SQLMAPPER/MIXEDMAPPER
 		if (introspectedTable.myBatis3XmlMapperPackage != null) {
 			introspectedTable.myBatis3XmlMapperPackage = introspectedTable.myBatis3XmlMapperPackage + "." + tableName
 		}
-//		if (introspectedTable.myBatis3FallbackSqlMapNamespace != null) {
-//			introspectedTable.myBatis3FallbackSqlMapNamespace = typeToSubpackageType(introspectedTable.myBatis3FallbackSqlMapNamespace, tableName)
-//		}
-//		if (introspectedTable.myBatis3SqlMapNamespace != null) {
-//			introspectedTable.myBatis3FallbackSqlMapNamespace = typeToSubpackageType(introspectedTable.myBatis3SqlMapNamespace, tableName)
-//		}
+		// ANNOTATEDMAPPER
+		if (introspectedTable.myBatis3SqlProviderType != null) {
+			introspectedTable.myBatis3SqlProviderType = typeToSubpackageType(introspectedTable.myBatis3SqlProviderType, tableName)
+		}
+
 //		introspectedTable.myBatisDynamicSqlSupportType = typeToSubpackageType(introspectedTable.myBatisDynamicSqlSupportType, tableName)
 //		super.initialized(introspectedTable)
 	}
