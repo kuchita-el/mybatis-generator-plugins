@@ -37,6 +37,25 @@ class CustomAliasedColumnListPlugin : PluginAdapter() {
 		return true
 	}
 
+	override fun sqlMapBlobColumnListElementGenerated(element: XmlElement, introspectedTable: IntrospectedTable): Boolean {
+		val customAliasedBaseColumnListElement = XmlElement("sql")
+		customAliasedBaseColumnListElement.addAttribute(Attribute("id", "Custom_Aliased_" + introspectedTable.blobColumnListId))
+		element.elements
+				.filterIsInstance<TextElement>()
+				.map {
+					val oldContent = it.content
+					val newContent = introspectedTable
+							.nonBLOBColumns
+							.fold(oldContent, { acc, introspectedColumn -> selectPhraseToCustomAliasedSelectPhrase(acc, introspectedColumn) })
+					TextElement(newContent)
+				}
+				.forEach { customAliasedBaseColumnListElement.addElement(it) }
+
+		elementsToAdd[introspectedTable.fullyQualifiedTable] = (elementsToAdd[introspectedTable.fullyQualifiedTable]
+				?: emptyList()).plus(customAliasedBaseColumnListElement)
+		return true
+	}
+
 	override fun sqlMapDocumentGenerated(document: Document, introspectedTable: IntrospectedTable): Boolean {
 		val rootElement = document.rootElement
 		val elements = elementsToAdd[introspectedTable.fullyQualifiedTable]
@@ -45,7 +64,7 @@ class CustomAliasedColumnListPlugin : PluginAdapter() {
 		return true
 	}
 
-	fun selectPhraseToCustomAliasedSelectPhrase(content: String, introspectedColumn: IntrospectedColumn): String {
+	private fun selectPhraseToCustomAliasedSelectPhrase(content: String, introspectedColumn: IntrospectedColumn): String {
 		val builder = StringBuilder()
 		builder.append("\${alias}")
 		builder.append(".")
