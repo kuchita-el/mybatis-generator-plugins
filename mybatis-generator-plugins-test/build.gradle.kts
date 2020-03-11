@@ -36,9 +36,10 @@ tasks.withType<MybatisGeneratorTask> {
     overwrite = true
 
     dependencies {
-        mybatisGenerator("org.hsqldb:hsqldb:2.4.1")
-//        mybatisGenerator("org.mybatis.generator:mybatis-generator-core:1.4.0")
-        mybatisGenerator("com.github.dkurata38:mybatis-generator-plugins:0.1.1")
+//        mybatisGenerator("org.hsqldb:hsqldb:2.4.1")
+        mybatisGenerator("org.postgresql:postgresql:42.2.6")
+        mybatisGenerator("org.mybatis.generator:mybatis-generator-core:1.4.0")
+        mybatisGenerator(project(":mybatis-generator-plugins"))
     }
 }
 
