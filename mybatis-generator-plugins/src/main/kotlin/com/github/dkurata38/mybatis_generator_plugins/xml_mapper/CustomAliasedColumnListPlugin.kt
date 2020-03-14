@@ -45,7 +45,7 @@ class CustomAliasedColumnListPlugin : PluginAdapter() {
 				.map {
 					val oldContent = it.content
 					val newContent = introspectedTable
-							.nonBLOBColumns
+							.blobColumns
 							.fold(oldContent, { acc, introspectedColumn -> selectPhraseToCustomAliasedSelectPhrase(acc, introspectedColumn) })
 					TextElement(newContent)
 				}
