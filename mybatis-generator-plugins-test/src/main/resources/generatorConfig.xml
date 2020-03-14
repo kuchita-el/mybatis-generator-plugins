@@ -102,18 +102,18 @@
         </javaTypeResolver>
 
         <javaModelGenerator
-                targetPackage="com.github.dkurata38.mybatis_generator_plugins.mybatis-generator-plugins_test.mybatis3"
-                targetProject="/Users/kuratadaisuke/Projects/open-web-library/source/mybatis-generator-plugins/mybatis-generator-plugins-test/src/main/java">
+                targetPackage="com.github.dkurata38.mybatis_generator_plugins.mybatis_generator_plugins_test.mybatis3"
+                targetProject="MAVEN">
             <property name="enableSubPackages" value="true"/>
         </javaModelGenerator>
         <sqlMapGenerator
-                targetPackage="com.github.dkurata38.mybatis_generator_plugins.mybatis-generator-plugins_test.mybatis3"
-                targetProject="/Users/kuratadaisuke/Projects/open-web-library/source/mybatis-generator-plugins/mybatis-generator-plugins-test/src/main/java">
+                targetPackage="com.github.dkurata38.mybatis_generator_plugins.mybatis_generator_plugins_test.mybatis3"
+                targetProject="MAVEN">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <javaClientGenerator
-                targetPackage="com.github.dkurata38.mybatis_generator_plugins.mybatis-generator-plugins_test.mybatis3"
-                targetProject="/Users/kuratadaisuke/Projects/open-web-library/source/mybatis-generator-plugins/mybatis-generator-plugins-test/src/main/java"
+                targetPackage="com.github.dkurata38.mybatis_generator_plugins.mybatis_generator_plugins_test.mybatis3"
+                targetProject="MAVEN"
                 type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>

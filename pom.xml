@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- The Basics -->
+	<groupId>com.github.dkurata38</groupId>
+	<artifactId>mybatis-generator-plugins-parent</artifactId>
+	<version>0.2.0</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>mybatis-generator-plugins</module>
+		<module>mybatis-generator-plugins-test</module>
+	</modules>
+	<properties>
+		<mybatis.generator.version>1.4.0</mybatis.generator.version>
+		<java.version>11</java.version>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<project.build.sourceEncoding>UTF-8
+		</project.build.sourceEncoding>
+	</properties>
+	<repositories>
+		<repository>
+			<id>github</id>
+			<name>GitHub OWNER Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/dkurata38/maven</url>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub OWNER Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/dkurata38/maven</url>
+		</repository>
+	</distributionManagement>
+</project>
