@@ -8,7 +8,7 @@
 	<parent>
 		<artifactId>mybatis-generator-plugins-parent</artifactId>
 		<groupId>com.github.dkurata38</groupId>
-		<version>0.2.0</version>
+		<version>0.2.1</version>
 	</parent>
 	<artifactId>mybatis-generator-plugins</artifactId>
 	<version>0.2.1</version>
