@@ -6,7 +6,7 @@
 
 	<!-- The Basics -->
 	<parent>
-		<artifactId>mybatis-generator-plugins-parent</artifactId>
+		<artifactId>mybatis-generator-plugins</artifactId>
 		<groupId>com.github.dkurata38</groupId>
 		<version>0.2.1</version>
 	</parent>
@@ -137,7 +137,7 @@
 							<goal>add-source</goal>
 						</goals>
 						<configuration>
-							<sources>${build.outputDirectory}/generated-sources/mybatis-generator</sources>
+							<sources>${project.build.directory}/generated-sources/mybatis-generator</sources>
 						</configuration>
 					</execution>
 				</executions>
@@ -177,6 +177,34 @@
 						<version>${hsqldb.version}</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<configuration>
+					<skipSource>true</skipSource>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

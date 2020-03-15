@@ -6,11 +6,11 @@
 
 	<!-- The Basics -->
 	<groupId>com.github.dkurata38</groupId>
-	<artifactId>mybatis-generator-plugins-parent</artifactId>
+	<artifactId>mybatis-generator-plugins</artifactId>
 	<version>0.2.1</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>mybatis-generator-plugins</module>
+		<module>mybatis-generator-plugins-core</module>
 		<module>mybatis-generator-plugins-test</module>
 	</modules>
 	<properties>
@@ -28,4 +28,11 @@
 			<url>https://maven.pkg.github.com/dkurata38/maven</url>
 		</repository>
 	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub OWNER Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/dkurata38/maven</url>
+		</repository>
+	</distributionManagement>
 </project>
