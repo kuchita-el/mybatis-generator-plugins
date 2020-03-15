@@ -2,10 +2,10 @@
         "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
-        <context id="kotlin" targetRuntime="MyBatis3Kotlin">
+        <context id="MyBatis3Kotlin" targetRuntime="MyBatis3Kotlin">
             <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin"/>
             <plugin type="com.github.dkurata38.mybatis_generator_plugins.kotlin.NotNullFieldPlugin"/>
-            <plugin type="com.github.dkurata38.mybatis_generator_plugins.kotlin.SeparateSubPackagesPlugin"/>
+            <plugin type="com.github.dkurata38.mybatis_generator_plugins.SeparateSubPackagesPlugin"/>
             <commentGenerator>
                 <property name="suppressDate" value="true"/>
                 <property name="addRemarkComments" value="false"/>
@@ -19,13 +19,13 @@
             </javaTypeResolver>
 
             <javaModelGenerator
-                    targetPackage="com.github.dkurata38.open_web_library.repository.mybatis3_kotlin"
-                    targetProject="/Users/kuratadaisuke/Projects/open-web-library/source/open-web-library/generator/src/main/kotlin">
+                    targetPackage="com.github.dkurata38.mybatis_generator_plugins.mybatis_generator_plugins_test.mybatis3_kotlin"
+                    targetProject="MAVEN">
                 <property name="enableSubPackages" value="true"/>
             </javaModelGenerator>
             <javaClientGenerator
-                    targetPackage="com.github.dkurata38.open_web_library.repository.mybatis3_kotlin"
-                    targetProject="/Users/kuratadaisuke/Projects/open-web-library/source/open-web-library/generator/src/main/kotlin">
+                    targetPackage="com.github.dkurata38.mybatis_generator_plugins.mybatis_generator_plugins_test.mybatis3_kotlin"
+                    targetProject="MAVEN">
                 <property name="enableSubPackages" value="true"/>
             </javaClientGenerator>
 
@@ -33,8 +33,7 @@
         </context>
         <context id="MyBatis3DynamicSql" targetRuntime="MyBatis3DynamicSql">
             <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin"/>
-            <!--        <plugin type="com.github.dkurata38.mybatis_generator_plugins.kotlin.NotNullFieldPlugin"/>-->
-            <plugin type="com.github.dkurata38.mybatis_generator_plugins.kotlin.SeparateSubPackagesPlugin"/>
+            <plugin type="com.github.dkurata38.mybatis_generator_plugins.SeparateSubPackagesPlugin"/>
             <commentGenerator>
                 <property name="suppressDate" value="true"/>
                 <property name="addRemarkComments" value="false"/>
@@ -48,13 +47,13 @@
             </javaTypeResolver>
 
             <javaModelGenerator
-                    targetPackage="com.github.dkurata38.open_web_library.repository.mybatis3_dsql"
-                    targetProject="/Users/kuratadaisuke/Projects/open-web-library/source/open-web-library/generator/src/main/java">
+                    targetPackage="com.github.dkurata38.mybatis_generator_plugins.mybatis_generator_plugins_test.mybatis3_dsql"
+                    targetProject="MAVEN">
                 <property name="enableSubPackages" value="true"/>
             </javaModelGenerator>
             <javaClientGenerator
-                    targetPackage="com.github.dkurata38.open_web_library.repository.mybatis3_dsql"
-                    targetProject="/Users/kuratadaisuke/Projects/open-web-library/source/open-web-library/generator/src/main/java">
+                    targetPackage="com.github.dkurata38.mybatis_generator_plugins.mybatis_generator_plugins_test.mybatis3_dsql"
+                    targetProject="MAVEN">
                 <property name="enableSubPackages" value="true"/>
             </javaClientGenerator>
 
@@ -62,8 +61,7 @@
         </context>
     <context id="MyBatis3" targetRuntime="MyBatis3">
         <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin"/>
-        <!--        <plugin type="com.github.dkurata38.mybatis_generator_plugins.kotlin.NotNullFieldPlugin"/>-->
-        <!--        <plugin type="com.github.dkurata38.mybatis_generator_plugins.SeparateSubPackagesPlugin"/>-->
+		<plugin type="com.github.dkurata38.mybatis_generator_plugins.SeparateSubPackagesPlugin"/>
         <plugin type="com.github.dkurata38.mybatis_generator_plugins.mybatis3.CustomAliasedColumnListPlugin"/>
         <commentGenerator>
             <property name="suppressDate" value="true"/>

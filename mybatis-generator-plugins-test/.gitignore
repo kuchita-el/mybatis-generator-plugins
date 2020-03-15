@@ -169,8 +169,3 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
-
-src/main/java/*
-!src/main/java
-src/main/kotlin/*
-!src/main/kotlin
