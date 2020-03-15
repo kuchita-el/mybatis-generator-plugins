@@ -1,4 +1,4 @@
-package com.github.dkurata38.mybatis_generator_plugins.xml_mapper
+package com.github.dkurata38.mybatis_generator_plugins.mybatis3
 
 import org.mybatis.generator.api.FullyQualifiedTable
 import org.mybatis.generator.api.IntrospectedColumn
