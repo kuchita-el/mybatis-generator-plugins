@@ -141,6 +141,17 @@
 							<goal>generate</goal>
 						</goals>
 						<phase>generate-sources</phase>
+						<configuration>
+							<overwrite>true</overwrite>
+							<contexts>
+								MyBatis3
+							</contexts>
+							<jdbcDriver>org.hsqldb.jdbc.JDBCDriver</jdbcDriver>
+							<jdbcURL>jdbc:hsqldb:mem:testdb</jdbcURL>
+							<jdbcUserId>sa</jdbcUserId>
+							<jdbcPassword></jdbcPassword>
+							<sqlScript>classpath:sql/table.sql</sqlScript>
+						</configuration>
 					</execution>
 				</executions>
 				<dependencies>
@@ -161,9 +172,6 @@
 						<version>42.2.10</version>
 					</dependency>
 				</dependencies>
-				<configuration>
-					<overrite>true</overrite>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
