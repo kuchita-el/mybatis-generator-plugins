@@ -28,11 +28,4 @@
 			<url>https://maven.pkg.github.com/dkurata38/maven</url>
 		</repository>
 	</repositories>
-	<distributionManagement>
-		<repository>
-			<id>github</id>
-			<name>GitHub OWNER Apache Maven Packages</name>
-			<url>https://maven.pkg.github.com/dkurata38/maven</url>
-		</repository>
-	</distributionManagement>
 </project>
