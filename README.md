@@ -11,29 +11,43 @@ MyBatis Generatorについては以下のリンクを参照してください。
 
 ## プラグインについて
 
-### NotNullFieldPlugin
+### com.github.dkurata38.mybatis_generator_plugins.kotlin.NotNullFieldPlugin
 
 このプラグインはtargetRuntimeに**Mybatis3Kotlin**を指定しているときだけ有効です。
 テーブルのカラムのうち、NotNull制約のあるカラムに対応するRecordクラスのフィールドをNonNull型として生成します。
 
-#### プラグイン適用前
+
+**プラグイン適用前**
 
 ```kotlin
-data class ExampleRecord(var exampleNonNull: String? = null,
+data class ExampleTable(var exampleNonNull: String? = null,
                          var exampleNullable: String? = null) {
 }
 ```
 
-#### プラグイン適用後
+**プラグイン適用後**
 
 ```kotlin
-data class ExampleRecord(var exampleNonNull: String,
-                         var exampleNullable: String? = null) {
+data class ExampleTable(val exampleNonNull: String,
+                        var exampleNullable: String? = null) {
 }
 ```
 
-generatorConfig.xmlに下記のように追記してください。
+### com.github.dkurata38.mybatis_generator_plugins.SeparateSubPackagesPlugin
 
-```xml
-<plugin type="com.github.dkurata38.mybatis_generator_plugins.kotlin.NotNullFieldPlugin"/>
-```
+このプラグインはMyBatisGeneratorで生成されるファイルをテーブルごとのサブパッケージに整理するプラグインです。targetPackageで指定したパッケージに対して、さらにテーブル名をもとにしたサブパッケージを作ります。
+
+**プラグイン適用前**
+
++ target_package
+    + ExampleTable
+    + ExampleTableMapper
+    + etc...
+    
+**プラグイン適用後**
+
++ target_package
+    + example_table
+        + ExampleTable
+        + ExampleTableMapper
+        + etc...
