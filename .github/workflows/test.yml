@@ -20,4 +20,4 @@ jobs:
       - name: Run a one-line script
         run: echo "$MESSAGE"
         env:
-          MESSAGE: ${{ github.event.push.size }}
+          MESSAGE: ${{ github.event }}
