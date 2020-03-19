@@ -18,4 +18,6 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo ${{ github.event.push.size }}
+        run: echo MESSAGE
+        env:
+          MESSAGE: ${{ github.event.push.size }}
