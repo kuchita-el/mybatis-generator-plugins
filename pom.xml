@@ -7,7 +7,7 @@
 	<!-- The Basics -->
 	<groupId>com.github.dkurata38</groupId>
 	<artifactId>mybatis-generator-plugins</artifactId>
-	<version>0.2.4</version>
+	<version>0.2.5</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>mybatis-generator-plugins-core</module>
