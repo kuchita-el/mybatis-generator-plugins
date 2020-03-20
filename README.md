@@ -9,6 +9,45 @@ MyBatis Generatorについては以下のリンクを参照してください。
 - [公式サイト](https://mybatis.org/generator/)
 - [GitHub](https://github.com/mybatis/generator)
 
+## インストール方法
+
+FatJarにクラスパスを通して使ってください。
+
+### コマンドライン
+
+```shell script
+java -jar mybatis-generator-core-x.x.x.jar -configfile generatorConfig.xml -cp mybatis-generator-plugins-core-x.x.x.jar
+```
+
+### Maven
+
+Mavenプロジェクト/libディレクトリにプラグインを配置してください。
+
+```xml
+<plugin>
+    <groupId>org.mybatis.generator</groupId>
+    <artifactId>mybatis-generator-maven-plugin</artifactId>
+    <version>x.x.x</version>
+    <executions>
+        <execution>
+            <id>Mybatis Generator Artifacts</id>
+            <goals>
+                <goal>generate</goal>
+            </goals>
+        </execution>
+    </executions>
+    <dependencies>
+        <dependency>
+            <groupId>com.github.dkurata38</groupId>
+            <artifactId>mybatis-generator-plugins-core</artifactId>
+            <version>x.x.x</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/mybatis-generator-plugins-core-x.x.x.jar</systemPath>
+        </dependency>
+    </dependencies>
+</plugin>
+```
+
 ## プラグインについて
 
 ### com.github.dkurata38.mybatis_generator_plugins.kotlin.NotNullFieldPlugin
