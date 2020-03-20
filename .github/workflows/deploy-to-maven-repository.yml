@@ -1,11 +1,11 @@
-name: Maven Package
+name: Deploy to Maven Repository
 
 on:
   release:
-    types: [created]
+    types: [published]
 
 jobs:
-  build:
+  deploy:
 
     runs-on: ubuntu-latest
 
