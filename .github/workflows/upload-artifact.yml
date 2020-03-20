@@ -16,7 +16,7 @@ jobs:
           java-version: 11
 
       - name: Package artifact
-        run: mvn package -P fat-jar pl mybatis-generator-plugins-core
+        run: mvn package -P fat-jar -pl mybatis-generator-plugins-core
 
       - name: Upload artifact to release
         uses: actions/upload-release-asset@v1
