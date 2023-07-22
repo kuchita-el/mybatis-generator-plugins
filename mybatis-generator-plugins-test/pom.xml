@@ -16,7 +16,7 @@
 
 	<properties>
 		<build.helper.plugin.version>3.0.0</build.helper.plugin.version>
-		<mybatis.spring.boot.version>2.1.1</mybatis.spring.boot.version>
+		<mybatis.version>3.5.3</mybatis.version>
 		<mybatis.dynamic.sql.version>1.1.4</mybatis.dynamic.sql.version>
 		<hsqldb.version>2.4.1</hsqldb.version>
 		<junit.jupiter.version>5.6.0</junit.jupiter.version>
@@ -29,9 +29,9 @@
 			<version>${kotlin.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>${mybatis.spring.boot.version}</version>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis.dynamic-sql</groupId>
