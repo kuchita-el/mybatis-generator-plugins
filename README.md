@@ -11,14 +11,6 @@ MyBatis Generatorについては以下のリンクを参照してください。
 
 ## インストール方法
 
-FatJarにクラスパスを通して使ってください。
-
-### コマンドライン
-
-```shell script
-java -jar mybatis-generator-core-x.x.x.jar -configfile generatorConfig.xml -cp mybatis-generator-plugins-core-x.x.x.jar
-```
-
 ### Maven
 
 Mavenプロジェクト/libディレクトリにプラグインを配置してください。
