@@ -1,0 +1,12 @@
+*               text=auto eol=lf
+
+*.cmd           text eol=crlf
+
+*.kt            text diff=kotlin
+*.md            text diff=markdown
+*
+
+
+# These files are binary and should be left untouched
+# (binary is a macro for -text -diff)
+*.jar           binary
