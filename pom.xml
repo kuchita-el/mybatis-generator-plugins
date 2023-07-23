@@ -35,7 +35,6 @@
 		<maven.javadoc.plugin.version>3.5.0</maven.javadoc.plugin.version>
 		<maven.deploy.plugin.version>3.1.1</maven.deploy.plugin.version>
 		<maven.wrapper.plugin.version>3.2.0</maven.wrapper.plugin.version>
-		<build.helper.plugin.version>3.4.0</build.helper.plugin.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -84,11 +83,6 @@
 				<plugin>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>${maven.deploy.plugin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>${build.helper.plugin.version}</version>
 				</plugin>
 				<plugin>
 					<groupId>org.mybatis.generator</groupId>

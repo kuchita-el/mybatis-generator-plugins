@@ -39,6 +39,8 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<sourceDirectory>${project.build.directory}/generated-sources/mybatis-generator</sourceDirectory>
+		<testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.jetbrains.kotlin</groupId>
@@ -46,38 +48,17 @@
 				<executions>
 					<execution>
 						<id>compile</id>
+						<phase>process-sources</phase>
 						<goals>
 							<goal>compile</goal>
 						</goals>
-						<configuration>
-							<sourceDirs>
-								<sourceDir>
-									${project.basedir}/src/main/java
-								</sourceDir>
-								<sourceDir>
-									${project.build.directory}/generated-sources/mybatis-generator
-								</sourceDir>
-								<sourceDir>
-									${project.basedir}/src/main/kotlin
-								</sourceDir>
-							</sourceDirs>
-						</configuration>
 					</execution>
 					<execution>
 						<id>test-compile</id>
+						<phase>process-test-sources</phase>
 						<goals>
 							<goal>test-compile</goal>
 						</goals>
-						<configuration>
-							<sourceDirs>
-								<sourceDir>
-									${project.basedir}/src/test/java
-								</sourceDir>
-								<sourceDir>
-									${project.basedir}/src/test/kotlin
-								</sourceDir>
-							</sourceDirs>
-						</configuration>
 					</execution>
 				</executions>
 				<configuration>
@@ -89,12 +70,10 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<executions>
-					<!-- Replacing default-compile as it is treated specially by maven -->
 					<execution>
 						<id>default-compile</id>
 						<phase>none</phase>
 					</execution>
-					<!-- Replacing default-testCompile as it is treated specially by maven -->
 					<execution>
 						<id>default-testCompile</id>
 						<phase>none</phase>
@@ -112,21 +91,6 @@
 						<goals>
 							<goal>testCompile</goal>
 						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>${project.build.directory}/generated-sources/mybatis-generator</sources>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
