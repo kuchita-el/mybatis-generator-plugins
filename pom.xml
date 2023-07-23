@@ -14,6 +14,7 @@
 		<module>mybatis-generator-plugins-test</module>
 	</modules>
 	<properties>
+		<maven>3.9.3</maven>
 		<java.version>11</java.version>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
@@ -27,6 +28,7 @@
 		<maven.site.plugin.version>3.8.2</maven.site.plugin.version>
 		<maven.javadoc.plugin.version>3.1.1</maven.javadoc.plugin.version>
 		<maven.deploy.plugin.version>2.8.2</maven.deploy.plugin.version>
+		<maven.wrapper.plugin.version>3.2.0</maven.wrapper.plugin.version>
 		<build.helper.plugin.version>3.0.0</build.helper.plugin.version>
 	</properties>
 	<repositories>
@@ -37,6 +39,12 @@
 		</repository>
 	</repositories>
 	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-wrapper-plugin</artifactId>
+				<version>${maven.wrapper.plugin.version}</version>
+			</plugin>
+		</plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>
