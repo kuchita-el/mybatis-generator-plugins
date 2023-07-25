@@ -36,6 +36,11 @@
 			<artifactId>kotlin-test-junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-reflect</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<sourceDirectory>${project.build.directory}/generated-sources/mybatis-generator</sourceDirectory>
