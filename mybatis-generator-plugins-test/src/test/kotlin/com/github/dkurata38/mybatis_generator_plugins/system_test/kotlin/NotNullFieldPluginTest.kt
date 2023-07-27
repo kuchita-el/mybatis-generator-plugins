@@ -1,4 +1,4 @@
-package com.github.dkurata38.mybatis_generator_plugins.kotlin
+package com.github.dkurata38.mybatis_generator_plugins.system_test.kotlin
 
 import com.github.dkurata38.mybatis_generator_plugins.mybatis_generator_plugins_test.mybatis3_kotlin.member.Member
 import kotlin.reflect.full.memberProperties
