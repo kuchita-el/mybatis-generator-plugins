@@ -12,48 +12,47 @@ class NotNullFieldPlugin : PluginAdapter() {
 	}
 
 	override fun kotlinDataClassGenerated(kotlinFile: KotlinFile?, dataClass: KotlinType?, introspectedTable: IntrospectedTable?): Boolean {
+		if (this.context.targetRuntime != "MyBatis3Kotlin") {
+			return super.kotlinDataClassGenerated(kotlinFile, dataClass, introspectedTable)
+		}
+
 		if (kotlinFile == null || dataClass == null || introspectedTable == null) {
 			return super.kotlinDataClassGenerated(kotlinFile, dataClass, introspectedTable)
 		}
 
-		if (introspectedTable.context.targetRuntime != "MyBatis3Kotlin") {
-			return super.kotlinDataClassGenerated(kotlinFile, dataClass, introspectedTable)
-		}
-
-		val properties = dataClass.constructorProperties
-				.filterNotNull()
-				.filterNot { isNullableProperty(it, introspectedTable) }
-				.map { it.toImmutableProperty() }
+		val notNullColumnNames = findNotNullPropertyNames(introspectedTable)
 
 		dataClass.constructorProperties.replaceAll {
-			val property = properties
-					.find { kotlinProperty -> it.name == kotlinProperty.name }
-			property ?: it
+			if (notNullColumnNames.contains(it.name)) toNonnullProperty(it) else it
 		}
 		return super.kotlinDataClassGenerated(kotlinFile, dataClass, introspectedTable)
 	}
 
-	/**
-	 * 第一引数で指定したKotlinDataClassのコンストラクタパラメータがNotNullカラムに対応したものかどうかを判定する。
-	 */
-	fun isNullableProperty(kotlinProperty: KotlinProperty, introspectedTable: IntrospectedTable): Boolean {
-		return introspectedTable
-				.allColumns
-				.find { kotlinProperty.name == it.javaProperty }
-				?.isNullable!!
-	}
+	companion object {
+		/**
+		 * notnull制約がかけられたカラムに対応するプロパティ名を検索する
+		 */
+		fun findNotNullPropertyNames(introspectedTable: IntrospectedTable): Set<String> {
+			return introspectedTable
+					.allColumns
+					.filterNot { it.isNullable }
+					.map { it.javaProperty }
+					.toSet()
+		}
 
-	/**
-	 * デフォルトで生成されるKotlinDataClassのコンストラクタパラメータをもとに
-	 * イミュータブルなコンストラクタパラメータを生成する。
-	 * 再代入不可能な型はNonNull型でパラメータ名はデフォルトで生成されるものと同様。
-	 */
-	fun KotlinProperty.toImmutableProperty(): KotlinProperty {
-		val dataType = this.dataType.orElse("").removeSuffix("?")
-		var builder = KotlinProperty.newVal(this.name)
-				.withDataType(dataType)
-		this.modifiers
-				.forEach { builder = builder.withModifier(it) }
-		return builder.build()
+
+		/**
+		 * デフォルトで生成されるKotlinDataClassのコンストラクタパラメータをもとに
+		 * イミュータブルなコンストラクタパラメータを生成する。
+		 * 再代入不可能な型はNonNull型でパラメータ名はデフォルトで生成されるものと同様。
+		 */
+		fun toNonnullProperty(kotlinProperty: KotlinProperty): KotlinProperty {
+			val dataType = kotlinProperty.dataType.orElse("").removeSuffix("?")
+			var builder = KotlinProperty.newVal(kotlinProperty.name)
+					.withDataType(dataType)
+			kotlinProperty.modifiers
+					.forEach { builder = builder.withModifier(it) }
+			return builder.build()
+		}
 	}
 }

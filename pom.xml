@@ -28,6 +28,7 @@
 		<mybatis.dynamic.sql.version>1.5.0</mybatis.dynamic.sql.version>
 		<hsqldb.version>2.7.2</hsqldb.version>
 		<jakarta.annotation.version>2.1.1</jakarta.annotation.version>
+		<junit.bom.version>5.10.0</junit.bom.version>
 
 		<maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
 		<maven.surefire.plugin.version>3.1.2</maven.surefire.plugin.version>
@@ -127,6 +128,13 @@
 				<groupId>org.jetbrains.kotlin</groupId>
 				<artifactId>kotlin-bom</artifactId>
 				<version>${kotlin.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>${junit.bom.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
