@@ -90,6 +90,18 @@
 			<plugin>
 				<groupId>org.mybatis.generator</groupId>
 				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>com.github.dkurata38</groupId>
+						<artifactId>mybatis-generator-plugins-core</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.hsqldb</groupId>
+						<artifactId>hsqldb</artifactId>
+						<version>${hsqldb.version}</version>
+					</dependency>
+				</dependencies>
 				<executions>
 					<execution>
 						<id>Mybatis Generator Artifacts</id>
