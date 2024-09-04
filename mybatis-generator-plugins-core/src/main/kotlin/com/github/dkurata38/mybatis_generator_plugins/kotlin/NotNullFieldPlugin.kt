@@ -42,16 +42,25 @@ class NotNullFieldPlugin : PluginAdapter() {
 
 
 		/**
-		 * デフォルトで生成されるKotlinDataClassのコンストラクタパラメータをもとに
-		 * イミュータブルなコンストラクタパラメータを生成する。
-		 * 再代入不可能な型はNonNull型でパラメータ名はデフォルトで生成されるものと同様。
+		 * デフォルトで生成されるKotlinDataClassのコンストラクタパラメータをもとに, 非null型のプロパティを作成する。
+		 * 引数省略時のデフォルト値がnullに設定されていた場合、コンパイルエラーを防ぐためにデフォルト値を削除する。
 		 */
 		fun toNonnullProperty(kotlinProperty: KotlinProperty): KotlinProperty {
+
+			var builder = if (kotlinProperty.type == KotlinProperty.Type.VAL) {
+				KotlinProperty.newVal(kotlinProperty.name)
+			} else {
+				KotlinProperty.newVar(kotlinProperty.name)
+			}
+
 			val dataType = kotlinProperty.dataType.orElse("").removeSuffix("?")
-			var builder = KotlinProperty.newVal(kotlinProperty.name)
-					.withDataType(dataType)
+			builder = builder.withDataType(dataType)
 			kotlinProperty.modifiers
 					.forEach { builder = builder.withModifier(it) }
+			kotlinProperty.initializationString
+				.filter { it.equals("null").not() }
+				.ifPresent { builder = builder.withInitializationString(it) }
+			kotlinProperty.annotations.forEach { builder = builder.withAnnotation(it) }
 			return builder.build()
 		}
 	}
