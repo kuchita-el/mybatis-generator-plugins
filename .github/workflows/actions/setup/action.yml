@@ -1,11 +1,9 @@
 name: setup
-description: ソースコードをチェックアウトして、ビルド環境をセットアップする
+description: ビルド環境をセットアップする
 
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v4
-
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
