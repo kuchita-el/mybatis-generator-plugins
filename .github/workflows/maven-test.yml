@@ -10,6 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: ./.github/workflows/actions/setup
+      - name: Set up
+        uses: ./.github/workflows/actions/setup
+
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
