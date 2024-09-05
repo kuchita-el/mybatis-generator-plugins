@@ -18,15 +18,21 @@ class ValFieldPlugin : PluginAdapter() {
     ): Boolean {
         dataClass.constructorProperties
             .replaceAll {
-                var builder = KotlinProperty.newVal(it.name)
-                it.dataType.ifPresent { dataType -> builder = builder.withDataType(dataType) }
-                it.modifiers.forEach { modifier -> builder = builder.withModifier(modifier) }
-                it.annotations.forEach { annotation -> builder = builder.withAnnotation(annotation) }
-                it.initializationString.ifPresent { initializationString ->
-                    builder = builder.withInitializationString(initializationString)
-                }
-                builder.build()
+                if (it.type == KotlinProperty.Type.VAL) it else toValProperty(it)
             }
         return super.kotlinDataClassGenerated(kotlinFile, dataClass, introspectedTable)
+    }
+
+    companion object {
+        fun toValProperty(property: KotlinProperty): KotlinProperty {
+            var builder = KotlinProperty.newVal(property.name)
+            property.dataType.ifPresent { dataType -> builder = builder.withDataType(dataType) }
+            property.modifiers.forEach { modifier -> builder = builder.withModifier(modifier) }
+            property.annotations.forEach { annotation -> builder = builder.withAnnotation(annotation) }
+            property.initializationString.ifPresent { initializationString ->
+                builder = builder.withInitializationString(initializationString)
+            }
+            return builder.build()
+        }
     }
 }
