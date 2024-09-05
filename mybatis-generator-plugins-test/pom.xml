@@ -111,7 +111,7 @@
 						<configuration>
 							<overwrite>true</overwrite>
 							<contexts>
-								MyBatis3DynamicSql, MyBatis3Kotlin, MyBatis3
+								MyBatis3DynamicSql, MyBatis3KotlinNotNull ,MyBatis3KotlinValField, MyBatis3
 							</contexts>
 							<jdbcDriver>org.hsqldb.jdbc.JDBCDriver</jdbcDriver>
 							<jdbcURL>jdbc:hsqldb:mem:testdb</jdbcURL>
