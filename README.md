@@ -22,7 +22,7 @@ MyBatis Generatorについては以下のリンクを参照してください。
 
 ```kotlin
 data class ExampleTable(var exampleNonNull: String? = null,
-                         var exampleNullable: String? = null) 
+                        var exampleNullable: String? = null) 
 ```
 
 **プラグイン適用後**
