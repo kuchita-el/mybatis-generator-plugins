@@ -7,11 +7,11 @@
 	<!-- The Basics -->
 	<parent>
 		<artifactId>mybatis-generator-plugins</artifactId>
-		<groupId>com.github.dkurata38</groupId>
-		<version>0.2.5</version>
+		<groupId>com.github.kuchita_el</groupId>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>mybatis-generator-plugins-test</artifactId>
-	<version>0.2.5</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<dependencies>
@@ -90,6 +90,18 @@
 			<plugin>
 				<groupId>org.mybatis.generator</groupId>
 				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>com.github.kuchita_el</groupId>
+						<artifactId>mybatis-generator-plugins-core</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.hsqldb</groupId>
+						<artifactId>hsqldb</artifactId>
+						<version>${hsqldb.version}</version>
+					</dependency>
+				</dependencies>
 				<executions>
 					<execution>
 						<id>Mybatis Generator Artifacts</id>
@@ -99,7 +111,7 @@
 						<configuration>
 							<overwrite>true</overwrite>
 							<contexts>
-								MyBatis3DynamicSql, MyBatis3Kotlin, MyBatis3
+								MyBatis3DynamicSql, MyBatis3KotlinNotNull ,MyBatis3KotlinValField, MyBatis3
 							</contexts>
 							<jdbcDriver>org.hsqldb.jdbc.JDBCDriver</jdbcDriver>
 							<jdbcURL>jdbc:hsqldb:mem:testdb</jdbcURL>

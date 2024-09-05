@@ -7,11 +7,11 @@
     <!-- The Basics -->
     <parent>
         <artifactId>mybatis-generator-plugins</artifactId>
-        <groupId>com.github.dkurata38</groupId>
-        <version>0.2.5</version>
+        <groupId>com.github.kuchita_el</groupId>
+        <version>1.0.0</version>
     </parent>
     <artifactId>mybatis-generator-plugins-core</artifactId>
-    <version>0.2.5</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <dependencies>
