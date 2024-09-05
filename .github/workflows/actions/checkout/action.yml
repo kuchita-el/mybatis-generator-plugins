@@ -1,0 +1,7 @@
+name: checkout
+description: ソースコードをチェックアウトする
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
