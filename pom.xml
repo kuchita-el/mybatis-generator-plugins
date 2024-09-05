@@ -5,9 +5,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<!-- The Basics -->
-	<groupId>com.github.dkurata38</groupId>
+	<groupId>com.github.kuchita_el</groupId>
 	<artifactId>mybatis-generator-plugins</artifactId>
-	<version>0.2.5</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>mybatis-generator-plugins-core</module>

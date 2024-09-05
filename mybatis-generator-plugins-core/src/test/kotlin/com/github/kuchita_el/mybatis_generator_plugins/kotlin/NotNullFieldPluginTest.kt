@@ -1,4 +1,4 @@
-package com.github.dkurata38.mybatis_generator_plugins.kotlin
+package com.github.kuchita_el.mybatis_generator_plugins.kotlin
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
