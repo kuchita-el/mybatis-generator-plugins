@@ -1,0 +1,29 @@
+name: setup
+description: ビルド環境をセットアップする
+
+inputs:
+  server-id:
+    description: Mavenのsettings.xmlを生成するときに使う。デフォルトはgithub。
+    required: false
+    default: github
+  server-username:
+    description: Mavenのsettings.xmlを生成するときに使う。デフォルトは$GITHUB_ACTOR。
+    required: false
+    default: GITHUB_ACTOR
+  server-password:
+    description: Mavenのsettings.xmlを生成するときに使う。デフォルトは$GITHUB_TOKEN。
+    required: false
+    default: GITHUB_TOKEN
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: 21
+        cache: maven
+        server-id: ${{ inputs.server-id }}
+        server-username: ${{inputs.server-username}}
+        server-password: ${{inputs.server-password}}

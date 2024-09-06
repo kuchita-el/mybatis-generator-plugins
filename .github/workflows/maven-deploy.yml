@@ -1,0 +1,21 @@
+name: Deploy to Maven Repository
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up
+        uses: ./.github/workflows/actions/setup
+
+      - name: Publish to GitHub Packages Apache Maven
+        run: mvn --batch-mode --update-snapshots deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
