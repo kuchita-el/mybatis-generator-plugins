@@ -7,13 +7,13 @@ inputs:
     required: false
     default: github
   server-username:
-    description: Mavenのsettings.xmlを生成するときに使う。デフォルトは$MAVEN_USERNAME。
+    description: Mavenのsettings.xmlを生成するときに使う。デフォルトは$GITHUB_ACTOR。
     required: false
-    default: MAVEN_USERNAME
+    default: GITHUB_ACTOR
   server-password:
-    description: Mavenのsettings.xmlを生成するときに使う。デフォルトは$MAVEN_USERNAME。
+    description: Mavenのsettings.xmlを生成するときに使う。デフォルトは$GITHUB_TOKEN。
     required: false
-    default: MAVEN_PASSWORD
+    default: GITHUB_TOKEN
 
 runs:
   using: "composite"
