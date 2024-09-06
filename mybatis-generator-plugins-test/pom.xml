@@ -8,10 +8,9 @@
 	<parent>
 		<artifactId>mybatis-generator-plugins</artifactId>
 		<groupId>com.github.kuchita_el</groupId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 	</parent>
 	<artifactId>mybatis-generator-plugins-test</artifactId>
-	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<dependencies>
@@ -94,7 +93,7 @@
 					<dependency>
 						<groupId>com.github.kuchita_el</groupId>
 						<artifactId>mybatis-generator-plugins-core</artifactId>
-						<version>${project.version}</version>
+						<version>${parent.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.hsqldb</groupId>
