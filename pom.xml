@@ -151,7 +151,7 @@
 		<repository>
 			<id>github</id>
 			<name>GitHub OWNER Apache Maven Packages</name>
-			<url>https://maven.pkg.github.com/kuchita-el/maven</url>
+			<url>https://maven.pkg.github.com/kuchita-el/mybatis-generator-plugins</url>
 		</repository>
 	</distributionManagement>
 </project>
