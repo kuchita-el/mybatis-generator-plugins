@@ -1,6 +1,20 @@
 name: setup
 description: ビルド環境をセットアップする
 
+inputs:
+  server-id:
+    description: Mavenのsettings.xmlを生成するときに使う。デフォルトはgithub。
+    required: false
+    default: github
+  server-username:
+    description: Mavenのsettings.xmlを生成するときに使う。デフォルトは$MAVEN_USERNAME。
+    required: false
+    default: MAVEN_USERNAME
+  server-password:
+    description: Mavenのsettings.xmlを生成するときに使う。デフォルトは$MAVEN_USERNAME。
+    required: false
+    default: MAVEN_PASSWORD
+
 runs:
   using: "composite"
   steps:
@@ -10,3 +24,6 @@ runs:
         distribution: temurin
         java-version: 21
         cache: maven
+        server-id: ${{ inputs.server-id }}
+        server-username: ${{inputs.server-username}}
+        server-password: ${{inputs.server-password}}
