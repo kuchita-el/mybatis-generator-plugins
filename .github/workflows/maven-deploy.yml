@@ -18,4 +18,4 @@ jobs:
       - name: Publish to GitHub Packages Apache Maven
         run: mvn --batch-mode --update-snapshots deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MAVEN_DEPLOY_TOKEN }}
