@@ -93,7 +93,7 @@
 					<dependency>
 						<groupId>com.github.kuchita_el</groupId>
 						<artifactId>mybatis-generator-plugins-core</artifactId>
-						<version>${parent.version}</version>
+						<version>${project.parent.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.hsqldb</groupId>
@@ -109,9 +109,6 @@
 						</goals>
 						<configuration>
 							<overwrite>true</overwrite>
-							<contexts>
-								MyBatis3DynamicSql, MyBatis3KotlinNotNull ,MyBatis3KotlinValField, MyBatis3
-							</contexts>
 							<jdbcDriver>org.hsqldb.jdbc.JDBCDriver</jdbcDriver>
 							<jdbcURL>jdbc:hsqldb:mem:testdb</jdbcURL>
 							<jdbcUserId>sa</jdbcUserId>
