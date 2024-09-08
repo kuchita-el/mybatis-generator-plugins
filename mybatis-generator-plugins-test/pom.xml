@@ -8,10 +8,27 @@
 	<parent>
 		<artifactId>mybatis-generator-plugins</artifactId>
 		<groupId>com.github.kuchita_el</groupId>
-		<version>1.0.1</version>
+		<version>1.0.2</version>
 	</parent>
 	<artifactId>mybatis-generator-plugins-test</artifactId>
 	<packaging>jar</packaging>
+
+	<properties>
+		<hsqldb.driver>org.hsqldb.jdbc.JDBCDriver</hsqldb.driver>
+		<hsqldb.url>jdbc:hsqldb:mem:testdb</hsqldb.url>
+		<hsqldb.username>sa</hsqldb.username>
+		<sql.initScript>classpath:sql/table.sql</sql.initScript>
+
+		<mybatis.generator.jdbcDriver>${hsqldb.driver}</mybatis.generator.jdbcDriver>
+		<mybatis.generator.jdbcURL>${hsqldb.url}</mybatis.generator.jdbcURL>
+		<mybatis.generator.jdbcUserId>${hsqldb.username}</mybatis.generator.jdbcUserId>
+		<mybatis.generator.sqlScript>${sql.initScript}</mybatis.generator.sqlScript>
+		<mybatis.generator.overwrite>true</mybatis.generator.overwrite>
+
+		<mybatis.generator.jdbcConnection.driverClass>${hsqldb.driver}</mybatis.generator.jdbcConnection.driverClass>
+		<mybatis.generator.jdbcConnection.connectionURL>${hsqldb.url}</mybatis.generator.jdbcConnection.connectionURL>
+		<mybatis.generator.jdbcConnection.userId>${hsqldb.username}</mybatis.generator.jdbcConnection.userId>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -93,7 +110,7 @@
 					<dependency>
 						<groupId>com.github.kuchita_el</groupId>
 						<artifactId>mybatis-generator-plugins-core</artifactId>
-						<version>${parent.version}</version>
+						<version>${project.parent.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.hsqldb</groupId>
@@ -107,16 +124,6 @@
 						<goals>
 							<goal>generate</goal>
 						</goals>
-						<configuration>
-							<overwrite>true</overwrite>
-							<contexts>
-								MyBatis3DynamicSql, MyBatis3KotlinNotNull ,MyBatis3KotlinValField, MyBatis3
-							</contexts>
-							<jdbcDriver>org.hsqldb.jdbc.JDBCDriver</jdbcDriver>
-							<jdbcURL>jdbc:hsqldb:mem:testdb</jdbcURL>
-							<jdbcUserId>sa</jdbcUserId>
-							<sqlScript>classpath:sql/table.sql</sqlScript>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
