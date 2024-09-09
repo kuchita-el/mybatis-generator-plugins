@@ -18,12 +18,12 @@
         </javaTypeResolver>
 
         <javaModelGenerator
-                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.mybatis_generator_plugins_test.not_null_field.mybatis3_kotlin"
+                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.system_test.not_null_field.mybatis3_kotlin"
                 targetProject="MAVEN">
             <property name="enableSubPackages" value="true"/>
         </javaModelGenerator>
         <javaClientGenerator
-                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.mybatis_generator_plugins_test.not_null_field.mybatis3_kotlin"
+                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.system_test.not_null_field.mybatis3_kotlin"
                 targetProject="MAVEN">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
@@ -47,12 +47,12 @@
         </javaTypeResolver>
 
         <javaModelGenerator
-                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.mybatis_generator_plugins_test.val_field.mybatis3_kotlin"
+                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.system_test.val_field.mybatis3_kotlin"
                 targetProject="MAVEN">
             <property name="enableSubPackages" value="true"/>
         </javaModelGenerator>
         <javaClientGenerator
-                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.mybatis_generator_plugins_test.val_field.mybatis3_kotlin"
+                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.system_test.val_field.mybatis3_kotlin"
                 targetProject="MAVEN">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
@@ -71,12 +71,12 @@
         </javaTypeResolver>
 
         <javaModelGenerator
-                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.mybatis_generator_plugins_test.mybatis3_dsql"
+                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.system_test.mybatis3_dsql"
                 targetProject="MAVEN">
             <property name="enableSubPackages" value="true"/>
         </javaModelGenerator>
         <javaClientGenerator
-                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.mybatis_generator_plugins_test.mybatis3_dsql"
+                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.system_test.mybatis3_dsql"
                 targetProject="MAVEN">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
@@ -101,17 +101,17 @@
         </javaTypeResolver>
 
         <javaModelGenerator
-                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.mybatis_generator_plugins_test.select_for_update.mybatis3.xml"
+                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.system_test.select_for_update.mybatis3.xml"
                 targetProject="MAVEN">
             <property name="enableSubPackages" value="true"/>
         </javaModelGenerator>
         <sqlMapGenerator
-                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.mybatis_generator_plugins_test.select_for_update..mybatis3.xml"
+                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.system_test.select_for_update..mybatis3.xml"
                 targetProject="MAVEN">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <javaClientGenerator
-                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.mybatis_generator_plugins_test.select_for_update.mybatis3.xml"
+                targetPackage="com.github.kuchita_el.mybatis_generator_plugins.system_test.select_for_update.mybatis3.xml"
                 targetProject="MAVEN"
                 type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
