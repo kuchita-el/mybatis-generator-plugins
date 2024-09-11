@@ -2,8 +2,9 @@ package com.github.kuchita_el.mybatis_generator_plugins.system_test.select_for_u
 
 import com.github.kuchita_el.mybatis_generator_plugins.system_test.select_for_update.mybatis3.xml.Member
 import com.github.kuchita_el.mybatis_generator_plugins.system_test.select_for_update.mybatis3.xml.MemberMapper
-import org.apache.ibatis.session.SqlSession
-import org.apache.ibatis.session.SqlSessionFactoryBuilder
+import com.github.kuchita_el.mybatis_generator_plugins.system_test.utils.getConnection
+import com.github.kuchita_el.mybatis_generator_plugins.system_test.utils.openSqlSession
+import com.github.kuchita_el.mybatis_generator_plugins.system_test.utils.selectOne
 import org.junit.Rule
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -21,8 +22,8 @@ class SelectForUpdatePluginTest {
 
     @Test
     fun トランザクション内でselectForUpdateを呼び出したら行ロックを獲得すること() {
-        val memberId = "memberId"
-        val name = "name"
+        val memberId = "testMemberId"
+        val name = "testName"
         val createdAt = LocalDateTime.now()
         val updatedAt = LocalDateTime.now()
         val (driverClassName, jdbcUrl, username, password) = runPostgres(postgres)
@@ -38,10 +39,24 @@ class SelectForUpdatePluginTest {
                 session.commit()
             }
 
+        val connection = getConnection(driverClassName, jdbcUrl, username, password)
+        val statement = connection.prepareStatement(
+            """
+                select
+                    count(*)
+                from
+                    pg_locks
+                    left outer join pg_class on pg_locks.relation = pg_class.oid
+                where
+                    pg_locks.mode = 'RowShareLock'
+                    and pg_class.relname = ?
+                """.trimIndent()
+        )
+        statement.setString(1, "member")
+
         openSqlSession(driverClassName, jdbcUrl, username, password)
             .use { session ->
                 val memberMapper = session.getMapper(MemberMapper::class.java)
-                val pgLocksMapper = session.getMapper(PgLocksMapper::class.java)
                 val member = memberMapper.selectByPrimaryKeyForUpdate(memberId)
 
                 assertAll(
@@ -49,32 +64,16 @@ class SelectForUpdatePluginTest {
                     { assertEquals(name, member.name) },
                 )
 
-                val numberOfLockedRows = pgLocksMapper.countRowShareLocksByTableName("member")
-                assertEquals(1, numberOfLockedRows)
+                val numberOfLockedRows = selectOne(statement, { it.getInt(1) })
+                assertEquals(1, numberOfLockedRows.getOrThrow())
                 session.rollback()
             }
 
-        openSqlSession(driverClassName, jdbcUrl, username, password)
-            .use { session ->
-                val pgLocksMapper = session.getMapper(PgLocksMapper::class.java)
-                val numberOfLockedRows = pgLocksMapper.countRowShareLocksByTableName("member")
-                assertEquals(0, numberOfLockedRows)
-            }
-    }
+        val numberOfLockedRows = selectOne(statement, {it.getInt(1) })
+        assertEquals(0, numberOfLockedRows.getOrThrow())
 
-
-    /**
-     * SqlSessionを開始する。
-     * 使用後にクローズする必要がある。
-     */
-    private fun openSqlSession(driver: String, url: String, username: String, password: String): SqlSession {
-        val configFile = this::class.java.getResourceAsStream("/mybatis-config.xml")
-        val properties =
-            mapOf("driver" to driver, "url" to url, "username" to username, "password" to password)
-                .toProperties()
-        val sqlSessionFactory = SqlSessionFactoryBuilder()
-            .build(configFile, properties)
-        return sqlSessionFactory.openSession()
+        statement.close()
+        connection.close()
     }
 
     /**
