@@ -7,7 +7,7 @@
 	<!-- The Basics -->
 	<groupId>com.github.kuchita_el</groupId>
 	<artifactId>mybatis-generator-plugins</artifactId>
-	<version>1.0.2</version>
+	<version>1.1.0</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>mybatis-generator-plugins-core</module>
@@ -28,6 +28,8 @@
 		<hsqldb.version>2.7.3</hsqldb.version>
 		<jakarta.annotation.version>3.0.0</jakarta.annotation.version>
 		<junit.bom.version>5.11.0</junit.bom.version>
+		<testcontainer.version>1.20.1</testcontainer.version>
+		<postgresql.version>42.7.4</postgresql.version>
 
 		<maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
 		<maven.surefire.plugin.version>3.5.0</maven.surefire.plugin.version>
@@ -126,6 +128,13 @@
 				<scope>import</scope>
 			</dependency>
 			<dependency>
+				<groupId>org.testcontainers</groupId>
+				<artifactId>testcontainers-bom</artifactId>
+				<version>${testcontainer.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
 				<groupId>org.mybatis.generator</groupId>
 				<artifactId>mybatis-generator-core</artifactId>
 				<version>${mybatis.generator.version}</version>
@@ -144,6 +153,18 @@
 				<groupId>jakarta.annotation</groupId>
 				<artifactId>jakarta.annotation-api</artifactId>
 				<version>${jakarta.annotation.version}</version>
+			</dependency>
+			<!-- testcontainerが依存しているバージョンに脆弱性が含まれるため、明示的にバージョンを指定する。 -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-compress</artifactId>
+				<version>1.26.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>${postgresql.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

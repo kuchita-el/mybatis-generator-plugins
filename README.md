@@ -50,3 +50,12 @@ data class ExampleTable(var exampleNonNull: String? = null)
 data class ExampleTable(val exampleNullable: String? = null) 
 ```
 
+### com.github.kuchita_el.mybatis_generator_plugins.SelectForUpdatePlugin
+
+このプラグインはtargetRuntimeに**MyBatis3**または**MyBatis3Simple**を指定しているときだけ有効です。
+
+**selectByPrimaryKey**の生成が有効なMapperで、以下のようなメソッドを追加で生成します。
+
+```java
+ExampleTable selectByPrimaryKeyForUpdate(String id);
+```
