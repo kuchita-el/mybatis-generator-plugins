@@ -1,48 +1,198 @@
 package com.github.kuchita_el.mybatis_generator_plugins.system_test.select_for_update
 
-import com.github.kuchita_el.mybatis_generator_plugins.system_test.select_for_update.mybatis3.xml.Member
-import com.github.kuchita_el.mybatis_generator_plugins.system_test.select_for_update.mybatis3.xml.MemberMapper
 import com.github.kuchita_el.mybatis_generator_plugins.system_test.utils.getConnection
 import com.github.kuchita_el.mybatis_generator_plugins.system_test.utils.openSqlSession
 import com.github.kuchita_el.mybatis_generator_plugins.system_test.utils.selectOne
-import org.junit.Rule
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.utility.DockerImageName
+import java.sql.Connection
+import java.sql.Timestamp
 import java.time.LocalDateTime
+import java.time.ZoneId
+import com.github.kuchita_el.mybatis_generator_plugins.system_test.select_for_update.mybatis3.annotated.MemberMapper as Mybatis3AnnotatedMemberMapper
+import com.github.kuchita_el.mybatis_generator_plugins.system_test.select_for_update.mybatis3.mixed.MemberMapper as Mybatis3MixedMemberMapper
+import com.github.kuchita_el.mybatis_generator_plugins.system_test.select_for_update.mybatis3.xml.MemberMapper as Mybatis3XmlMemberMapper
+import com.github.kuchita_el.mybatis_generator_plugins.system_test.select_for_update.mybatis3_simple.annotated.MemberMapper as MyBatis3SimpleAnnotatedMemberMapper
+import com.github.kuchita_el.mybatis_generator_plugins.system_test.select_for_update.mybatis3_simple.xml.MemberMapper as Mybatis3SimpleXmlMemberMapper
 
 class SelectForUpdatePluginTest {
 
-    @Rule
-    @JvmField
-    val postgres: PostgreSQLContainer<*> = PostgreSQLContainer(DockerImageName.parse("postgres:16-alpine"))
-        .withInitScripts("sql/table.sql")
+    @Nested
+    inner class MyBatis3AnnotatedTest {
+        @Test
+        fun トランザクション内でselectForUpdateを呼び出したら行ロックを獲得すること() {
+            val connection = getConnection(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
 
-    @Test
-    fun トランザクション内でselectForUpdateを呼び出したら行ロックを獲得すること() {
-        val memberId = "testMemberId"
-        val name = "testName"
+            openSqlSession(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
+                .use { session ->
+                    val memberMapper = session.getMapper(Mybatis3AnnotatedMemberMapper::class.java)
+                    val member = memberMapper.selectByPrimaryKeyForUpdate(memberId)
+
+                    assertAll(
+                        { assertEquals(memberId, member.memberId) },
+                        { assertEquals(name, member.name) },
+                    )
+
+                    val numberOfLockedRows = countRowShareLocks(connection, "member")
+                    assertEquals(1, numberOfLockedRows.getOrThrow())
+                    session.rollback()
+                }
+
+            val numberOfLockedRows = countRowShareLocks(connection, "member")
+            assertEquals(0, numberOfLockedRows.getOrThrow())
+
+            connection.close()
+        }
+    }
+
+    @Nested
+    inner class MyBatis3MixedTest {
+        @Test
+        fun トランザクション内でselectForUpdateを呼び出したら行ロックを獲得すること() {
+            val connection = getConnection(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
+
+            openSqlSession(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
+                .use { session ->
+                    val memberMapper = session.getMapper(Mybatis3MixedMemberMapper::class.java)
+                    val member = memberMapper.selectByPrimaryKeyForUpdate(memberId)
+
+                    assertAll(
+                        { assertEquals(memberId, member.memberId) },
+                        { assertEquals(name, member.name) },
+                    )
+
+                    val numberOfLockedRows = countRowShareLocks(connection, "member")
+                    assertEquals(1, numberOfLockedRows.getOrThrow())
+                    session.rollback()
+                }
+
+            val numberOfLockedRows = countRowShareLocks(connection, "member")
+            assertEquals(0, numberOfLockedRows.getOrThrow())
+
+            connection.close()
+        }
+    }
+
+    @Nested
+    inner class MyBatis3XMLTest {
+        @Test
+        fun トランザクション内でselectForUpdateを呼び出したら行ロックを獲得すること() {
+            val connection = getConnection(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
+
+            openSqlSession(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
+                .use { session ->
+                    val memberMapper = session.getMapper(Mybatis3XmlMemberMapper::class.java)
+                    val member = memberMapper.selectByPrimaryKeyForUpdate(memberId)
+
+                    assertAll(
+                        { assertEquals(memberId, member.memberId) },
+                        { assertEquals(name, member.name) },
+                    )
+
+                    val numberOfLockedRows = countRowShareLocks(connection, "member")
+                    assertEquals(1, numberOfLockedRows.getOrThrow())
+                    session.rollback()
+                }
+
+            val numberOfLockedRows = countRowShareLocks(connection, "member")
+            assertEquals(0, numberOfLockedRows.getOrThrow())
+
+            connection.close()
+        }
+    }
+
+
+    @Nested
+    inner class MyBatis3SimpleAnnotatedTest {
+        @Test
+        fun トランザクション内でselectForUpdateを呼び出したら行ロックを獲得すること() {
+            val connection = getConnection(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
+
+            openSqlSession(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
+                .use { session ->
+                    val memberMapper = session.getMapper(MyBatis3SimpleAnnotatedMemberMapper::class.java)
+                    val member = memberMapper.selectByPrimaryKeyForUpdate(memberId)
+
+                    assertAll(
+                        { assertEquals(memberId, member.memberId) },
+                        { assertEquals(name, member.name) },
+                    )
+
+                    val numberOfLockedRows = countRowShareLocks(connection, "member")
+                    assertEquals(1, numberOfLockedRows.getOrThrow())
+                    session.rollback()
+                }
+
+            val numberOfLockedRows = countRowShareLocks(connection, "member")
+            assertEquals(0, numberOfLockedRows.getOrThrow())
+
+            connection.close()
+        }
+    }
+
+
+    @Nested
+    inner class MyBatis3SimpleXMLTest {
+        @Test
+        fun トランザクション内でselectForUpdateを呼び出したら行ロックを獲得すること() {
+            val connection = getConnection(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
+
+            openSqlSession(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
+                .use { session ->
+                    val memberMapper = session.getMapper(Mybatis3SimpleXmlMemberMapper::class.java)
+                    val member = memberMapper.selectByPrimaryKeyForUpdate(memberId)
+
+                    assertAll(
+                        { assertEquals(memberId, member.memberId) },
+                        { assertEquals(name, member.name) },
+                    )
+
+                    val numberOfLockedRows = countRowShareLocks(connection, "member")
+                    assertEquals(1, numberOfLockedRows.getOrThrow())
+                    session.rollback()
+                }
+
+            val numberOfLockedRows = countRowShareLocks(connection, "member")
+            assertEquals(0, numberOfLockedRows.getOrThrow())
+
+            connection.close()
+        }
+    }
+
+    companion object {
+        const val memberId = "testMemberId"
+        const val name = "testName"
         val createdAt = LocalDateTime.now()
         val updatedAt = LocalDateTime.now()
-        val (driverClassName, jdbcUrl, username, password) = runPostgres(postgres)
-        openSqlSession(driverClassName, jdbcUrl, username, password)
-            .use { session ->
-                val memberMapper = session.getMapper(MemberMapper::class.java)
-                val member = Member()
-                member.memberId = memberId
-                member.name = name
-                member.createdAt = createdAt
-                member.updatedAt = updatedAt
-                memberMapper.insert(member)
-                session.commit()
-            }
 
-        val connection = getConnection(driverClassName, jdbcUrl, username, password)
-        val statement = connection.prepareStatement(
-            """
-                select
+        val postgres: PostgreSQLContainer<*> = PostgreSQLContainer(DockerImageName.parse("postgres:16-alpine")).apply {
+            withInitScripts("sql/table.sql")
+            start()
+
+            createConnection("").use { connection ->
+                insertTestData(connection)
+            }
+        }
+
+        @JvmStatic
+        fun insertTestData(connection: Connection) {
+            connection.prepareStatement("INSERT INTO member(member_id, name, created_at, updated_at) VALUES (?, ?, ?, ?)").use {
+                it.setString(1, memberId)
+                it.setString(2, name)
+                it.setTimestamp(3, Timestamp.from(createdAt.atZone(ZoneId.systemDefault()).toInstant()))
+                it.setTimestamp(4, Timestamp.from(updatedAt.atZone(ZoneId.systemDefault()).toInstant()))
+                it.executeUpdate()
+            }
+        }
+
+        @JvmStatic
+        fun countRowShareLocks(connection: Connection, tableName: String): Result<Int?> {
+            connection.prepareStatement("""
+            select
                     count(*)
                 from
                     pg_locks
@@ -50,43 +200,11 @@ class SelectForUpdatePluginTest {
                 where
                     pg_locks.mode = 'RowShareLock'
                     and pg_class.relname = ?
-                """.trimIndent()
-        )
-        statement.setString(1, "member")
-
-        openSqlSession(driverClassName, jdbcUrl, username, password)
-            .use { session ->
-                val memberMapper = session.getMapper(MemberMapper::class.java)
-                val member = memberMapper.selectByPrimaryKeyForUpdate(memberId)
-
-                assertAll(
-                    { assertEquals(memberId, member.memberId) },
-                    { assertEquals(name, member.name) },
-                )
-
-                val numberOfLockedRows = selectOne(statement, { it.getInt(1) })
-                assertEquals(1, numberOfLockedRows.getOrThrow())
-                session.rollback()
+            """.trimIndent()).use {
+                it.setString(1, tableName)
+                return selectOne(it, { resultSet -> resultSet.getInt(1) })
             }
+        }
 
-        val numberOfLockedRows = selectOne(statement, {it.getInt(1) })
-        assertEquals(0, numberOfLockedRows.getOrThrow())
-
-        statement.close()
-        connection.close()
     }
-
-    /**
-     * Postgresを起動する
-     */
-    private fun runPostgres(container: PostgreSQLContainer<out PostgreSQLContainer<*>>): StartedDatabase {
-        postgres.start()
-        val jdbcUrl = container.jdbcUrl
-        val username = container.username
-        val password = container.password
-        val driverClassName = container.driverClassName
-        return StartedDatabase(driverClassName, jdbcUrl, username, password)
-    }
-
-    data class StartedDatabase(val driverClassName: String, val jdbcUrl: String, val username: String, val password: String)
 }

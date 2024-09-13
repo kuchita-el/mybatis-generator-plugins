@@ -1,5 +1,6 @@
 package com.github.kuchita_el.mybatis_generator_plugins
 
+import com.github.kuchita_el.mybatis_generator_plugins.generators.AnnotatedSelectByPrimaryKeyForUpdateMethodGenerator
 import org.mybatis.generator.api.FullyQualifiedTable
 import org.mybatis.generator.api.IntrospectedTable
 import org.mybatis.generator.api.PluginAdapter
@@ -9,6 +10,8 @@ import org.mybatis.generator.api.dom.xml.Attribute
 import org.mybatis.generator.api.dom.xml.Document
 import org.mybatis.generator.api.dom.xml.TextElement
 import org.mybatis.generator.api.dom.xml.XmlElement
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator
+import org.mybatis.generator.config.Context
 
 class SelectForUpdatePlugin : PluginAdapter() {
     companion object {
@@ -22,6 +25,10 @@ class SelectForUpdatePlugin : PluginAdapter() {
 
     }
 
+    enum class TargetRuntime {
+        MyBatis3Kotlin, MyBatis3, MyBatis3DynamicSql, MyBatis3Simple
+    }
+
     override fun validate(warnings: MutableList<String>): Boolean {
         return true
     }
@@ -31,16 +38,82 @@ class SelectForUpdatePlugin : PluginAdapter() {
         interfaze: Interface,
         introspectedTable: IntrospectedTable
     ): Boolean {
-        when (context.javaClientGeneratorConfiguration.configurationType) {
-            JavaClientGeneratorConfigurationType.XmlMapper.value -> {
-                val selectByPrimaryKeyForUpdate = Method(method)
-                selectByPrimaryKeyForUpdate.name += METHOD_SUFFIX
-                interfaze.addMethod(selectByPrimaryKeyForUpdate)
+        when (context.targetRuntime) {
+            TargetRuntime.MyBatis3Simple.name -> {
+                when (context.javaClientGeneratorConfiguration.configurationType) {
+                    JavaClientGeneratorConfigurationType.XmlMapper.value -> {
+                        val selectByPrimaryKeyForUpdate = Method(method)
+                        selectByPrimaryKeyForUpdate.name += METHOD_SUFFIX
+                        interfaze.addMethod(selectByPrimaryKeyForUpdate)
+                    }
+
+                    JavaClientGeneratorConfigurationType.AnnotatedMapper.value -> {
+                        executeJavaMapperMethodGenerator(
+                            {
+                                AnnotatedSelectByPrimaryKeyForUpdateMethodGenerator(
+                                    useResultMapIfAvailable = false,
+                                    isSimple = true,
+                                    methodName = method.name + METHOD_SUFFIX
+                                )
+                            },
+                            context,
+                            introspectedTable,
+                            interfaze
+                        )
+                    }
+                }
             }
-            else -> {}
+
+            TargetRuntime.MyBatis3.name -> {
+                when (context.javaClientGeneratorConfiguration.configurationType) {
+                    JavaClientGeneratorConfigurationType.XmlMapper.value -> {
+                        val selectByPrimaryKeyForUpdate = Method(method)
+                        selectByPrimaryKeyForUpdate.name += METHOD_SUFFIX
+                        interfaze.addMethod(selectByPrimaryKeyForUpdate)
+                    }
+
+                    JavaClientGeneratorConfigurationType.MixedMapper.value -> {
+                        executeJavaMapperMethodGenerator(
+                            {AnnotatedSelectByPrimaryKeyForUpdateMethodGenerator(
+                                useResultMapIfAvailable = true,
+                                isSimple = false,
+                                methodName = method.name + METHOD_SUFFIX
+                            )},
+                            context, introspectedTable, interfaze
+                        )
+                    }
+
+                    JavaClientGeneratorConfigurationType.AnnotatedMapper.value -> {
+                        executeJavaMapperMethodGenerator(
+                            {AnnotatedSelectByPrimaryKeyForUpdateMethodGenerator(
+                                useResultMapIfAvailable = false,
+                                isSimple = false,
+                                methodName = method.name + METHOD_SUFFIX
+                            )},
+                            context, introspectedTable, interfaze
+                        )
+                    }
+
+                    else -> {}
+                }
+            }
         }
+
         return super.clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)
     }
+
+    private fun executeJavaMapperMethodGenerator(
+        generatorProvider: () -> AbstractJavaMapperMethodGenerator,
+        context: Context,
+        introspectedTable: IntrospectedTable,
+        interfaze: Interface
+    ) {
+        val generator = generatorProvider()
+        generator.setContext(context)
+        generator.setIntrospectedTable(introspectedTable)
+        generator.addInterfaceElements(interfaze)
+    }
+
 
     override fun sqlMapSelectByPrimaryKeyElementGenerated(
         element: XmlElement,
