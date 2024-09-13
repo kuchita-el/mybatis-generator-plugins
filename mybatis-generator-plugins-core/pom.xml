@@ -8,7 +8,7 @@
     <parent>
         <artifactId>mybatis-generator-plugins</artifactId>
         <groupId>com.github.kuchita_el</groupId>
-        <version>1.0.2</version>
+        <version>1.1.0</version>
     </parent>
     <artifactId>mybatis-generator-plugins-core</artifactId>
     <packaging>jar</packaging>
