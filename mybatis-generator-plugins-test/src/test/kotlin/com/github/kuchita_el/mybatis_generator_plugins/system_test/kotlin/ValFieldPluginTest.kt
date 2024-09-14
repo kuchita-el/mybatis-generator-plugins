@@ -12,6 +12,5 @@ class ValFieldPluginTest {
         val memberProperty = Member::class.memberProperties.toList().find { it.name == "memberId" } ?: fail("")
 
         assertTrue(memberProperty.isFinal)
-
     }
 }

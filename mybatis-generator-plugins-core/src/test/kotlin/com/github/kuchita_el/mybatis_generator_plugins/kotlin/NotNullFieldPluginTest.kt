@@ -1,6 +1,10 @@
 package com.github.kuchita_el.mybatis_generator_plugins.kotlin
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertAll
+import org.junit.jupiter.api.Assertions.assertArrayEquals
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertIterableEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -14,14 +18,13 @@ import java.util.Optional
 class NotNullFieldPluginTest {
     @Nested
     inner class ToNonnullPropertyTest {
-
         @ParameterizedTest
         @CsvSource(
             "VAL, field1, String?, PRIVATE, @Getter, defaultString, String, defaultString", // VAL、 元がNullable、 デフォルト値がNULLではない
             "VAR, field2, Int, PRIVATE, @Setter, 0, Int, 0", // VAR、元がNotNull、デフォルト値がNULL以外
             "VAL, field3, String?, PRIVATE, @Getter, null, String, NULL", // VAL、元がNullable、デフォルト値がnull
             "VAL, field4, String, NULL, NULL, NULL, String, NULL", // VAL、元がNotNull、オプションのパラメータが全部Null
-            nullValues = ["NULL"]
+            nullValues = ["NULL"],
         )
         fun プロパティのデータ型がNotNull型になる(
             type: KotlinProperty.Type,
@@ -31,12 +34,13 @@ class NotNullFieldPluginTest {
             annotation: String?,
             initializationString: String?,
             expectedDataType: String,
-            expectedInitializationString: String?
+            expectedInitializationString: String?,
         ) {
             var builder =
                 if (type == KotlinProperty.Type.VAL) KotlinProperty.newVal(name) else KotlinProperty.newVar(name)
-            builder = builder
-                .withDataType(dataType)
+            builder =
+                builder
+                    .withDataType(dataType)
             if (modifier != null) builder = builder.withModifier(modifier)
             if (annotation != null) builder = builder.withAnnotation(annotation)
             if (initializationString != null) builder = builder.withInitializationString(initializationString)
@@ -53,7 +57,7 @@ class NotNullFieldPluginTest {
                 { assertEquals(Optional.ofNullable(expectedDataType), actual.dataType) },
                 { assertArrayEquals(expectedModifier, actual.modifiers.toTypedArray()) },
                 { assertArrayEquals(expectedAnnotation, actual.annotations.toTypedArray()) },
-                { assertEquals(Optional.ofNullable(expectedInitializationString), actual.initializationString) }
+                { assertEquals(Optional.ofNullable(expectedInitializationString), actual.initializationString) },
             )
         }
     }
@@ -75,9 +79,8 @@ class NotNullFieldPluginTest {
                     column.javaProperty = "name"
                     column.isNullable = true
                     column
-                }
-            )
-                .forEach { introspectedTable.addColumn(it.invoke()) }
+                },
+            ).forEach { introspectedTable.addColumn(it.invoke()) }
 
             assertTrue(NotNullFieldPlugin.findNotNullPropertyNames(introspectedTable).isEmpty())
         }
@@ -97,9 +100,8 @@ class NotNullFieldPluginTest {
                     column.javaProperty = "name"
                     column.isNullable = true
                     column
-                }
-            )
-                .forEach { introspectedTable1.addColumn(it.invoke()) }
+                },
+            ).forEach { introspectedTable1.addColumn(it.invoke()) }
             val introspectedTable2 = IntrospectedTableKotlinImpl()
             listOf(
                 {
@@ -113,16 +115,14 @@ class NotNullFieldPluginTest {
                     column.javaProperty = "name"
                     column.isNullable = false
                     column
-                }
-            )
-                .forEach { introspectedTable2.addColumn(it.invoke()) }
+                },
+            ).forEach { introspectedTable2.addColumn(it.invoke()) }
 
             assertIterableEquals(setOf("memberId"), NotNullFieldPlugin.findNotNullPropertyNames(introspectedTable1))
             assertIterableEquals(
                 setOf("memberId", "name"),
-                NotNullFieldPlugin.findNotNullPropertyNames(introspectedTable2)
+                NotNullFieldPlugin.findNotNullPropertyNames(introspectedTable2),
             )
         }
     }
 }
-

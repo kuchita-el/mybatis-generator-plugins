@@ -5,12 +5,20 @@ import java.sql.DriverManager
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 
-fun getConnection(driverClass: String, jdbcUrl: String, username: String, password: String): Connection {
+fun getConnection(
+    driverClass: String,
+    jdbcUrl: String,
+    username: String,
+    password: String,
+): Connection {
     Class.forName(driverClass)
     return DriverManager.getConnection(jdbcUrl, username, password)
 }
 
-fun <Row> selectList(preparedStatement: PreparedStatement, rowCreator: (resultSet: ResultSet) -> Row): List<Row> {
+fun <Row> selectList(
+    preparedStatement: PreparedStatement,
+    rowCreator: (resultSet: ResultSet) -> Row,
+): List<Row> {
     preparedStatement.executeQuery().use {
         val mutableList = mutableListOf<Row>()
         while (it.next()) {
@@ -20,7 +28,10 @@ fun <Row> selectList(preparedStatement: PreparedStatement, rowCreator: (resultSe
     }
 }
 
-fun <Row> selectOne(preparedStatement: PreparedStatement, rowCreator: (resultSet: ResultSet) -> Row): Result<Row?> {
+fun <Row> selectOne(
+    preparedStatement: PreparedStatement,
+    rowCreator: (resultSet: ResultSet) -> Row,
+): Result<Row?> {
     preparedStatement.executeQuery().use {
         var result: Row? = null
         while (it.next()) {
@@ -30,9 +41,7 @@ fun <Row> selectOne(preparedStatement: PreparedStatement, rowCreator: (resultSet
             } else {
                 return Result.failure(RuntimeException("結果が1行ではありませんでした。"))
             }
-
         }
         return Result.success(result)
     }
-
 }
