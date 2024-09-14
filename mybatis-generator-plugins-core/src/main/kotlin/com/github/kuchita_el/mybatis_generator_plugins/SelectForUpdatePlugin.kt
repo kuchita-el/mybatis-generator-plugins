@@ -1,6 +1,8 @@
 package com.github.kuchita_el.mybatis_generator_plugins
 
 import com.github.kuchita_el.mybatis_generator_plugins.generators.AnnotatedSelectByPrimaryKeyForUpdateMethodGenerator
+import com.github.kuchita_el.mybatis_generator_plugins.type.JavaClientGeneratorConfigurationType
+import com.github.kuchita_el.mybatis_generator_plugins.type.TargetRuntime
 import org.mybatis.generator.api.FullyQualifiedTable
 import org.mybatis.generator.api.IntrospectedTable
 import org.mybatis.generator.api.PluginAdapter
@@ -19,15 +21,6 @@ class SelectForUpdatePlugin : PluginAdapter() {
     }
 
     private val elementsToAdd: MutableMap<FullyQualifiedTable, MutableList<XmlElement>> = mutableMapOf()
-
-    enum class JavaClientGeneratorConfigurationType(val value: String) {
-        XmlMapper("XMLMAPPER"), MixedMapper("MIXEDMAPPER"), AnnotatedMapper("ANNOTATEDMAPPER"),
-
-    }
-
-    enum class TargetRuntime {
-        MyBatis3Kotlin, MyBatis3, MyBatis3DynamicSql, MyBatis3Simple
-    }
 
     override fun validate(warnings: MutableList<String>): Boolean {
         return true
