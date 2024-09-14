@@ -1,0 +1,11 @@
+root = true
+
+[*.{kt,kts}]
+ktlint_code_style = ktlint_official
+ktlint_standard_package-name = disabled
+ij_kotlin_name_count_to_use_star_import = 2147483647
+ij_kotlin_name_count_to_use_star_import_for_members = 2147483647
+ij_kotlin_packages_to_use_import_on_demand = unset
+
+[*/src/test/**.{kt,kts}]
+ktlint_standard_function-naming = disabled

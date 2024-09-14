@@ -8,13 +8,19 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder
  * SqlSessionを開始する。
  * 使用後にクローズする必要がある。
  */
-fun openSqlSession(driver: String, url: String, username: String, password: String): SqlSession {
+fun openSqlSession(
+    driver: String,
+    url: String,
+    username: String,
+    password: String,
+): SqlSession {
     Resources.getResourceAsStream("mybatis-config.xml").use {
         val properties =
             mapOf("driver" to driver, "url" to url, "username" to username, "password" to password)
                 .toProperties()
-        val sqlSessionFactory = SqlSessionFactoryBuilder()
-            .build(it, properties)
+        val sqlSessionFactory =
+            SqlSessionFactoryBuilder()
+                .build(it, properties)
         return sqlSessionFactory.openSession()
     }
 }

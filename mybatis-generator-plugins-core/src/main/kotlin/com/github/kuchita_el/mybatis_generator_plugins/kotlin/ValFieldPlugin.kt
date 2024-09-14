@@ -7,14 +7,12 @@ import org.mybatis.generator.api.dom.kotlin.KotlinProperty
 import org.mybatis.generator.api.dom.kotlin.KotlinType
 
 class ValFieldPlugin : PluginAdapter() {
-    override fun validate(warnings: MutableList<String>?): Boolean {
-        return true
-    }
+    override fun validate(warnings: MutableList<String>?): Boolean = true
 
     override fun kotlinDataClassGenerated(
         kotlinFile: KotlinFile,
         dataClass: KotlinType,
-        introspectedTable: IntrospectedTable
+        introspectedTable: IntrospectedTable,
     ): Boolean {
         dataClass.constructorProperties
             .replaceAll {

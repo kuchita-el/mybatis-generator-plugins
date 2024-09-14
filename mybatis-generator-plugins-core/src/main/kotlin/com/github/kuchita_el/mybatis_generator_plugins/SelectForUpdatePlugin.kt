@@ -22,14 +22,12 @@ class SelectForUpdatePlugin : PluginAdapter() {
 
     private val elementsToAdd: MutableMap<FullyQualifiedTable, MutableList<XmlElement>> = mutableMapOf()
 
-    override fun validate(warnings: MutableList<String>): Boolean {
-        return true
-    }
+    override fun validate(warnings: MutableList<String>): Boolean = true
 
     override fun clientSelectByPrimaryKeyMethodGenerated(
         method: Method,
         interfaze: Interface,
-        introspectedTable: IntrospectedTable
+        introspectedTable: IntrospectedTable,
     ): Boolean {
         when (context.targetRuntime) {
             TargetRuntime.MyBatis3Simple.name -> {
@@ -46,12 +44,12 @@ class SelectForUpdatePlugin : PluginAdapter() {
                                 AnnotatedSelectByPrimaryKeyForUpdateMethodGenerator(
                                     useResultMapIfAvailable = false,
                                     isSimple = true,
-                                    methodName = method.name + METHOD_SUFFIX
+                                    methodName = method.name + METHOD_SUFFIX,
                                 )
                             },
                             context,
                             introspectedTable,
-                            interfaze
+                            interfaze,
                         )
                     }
                 }
@@ -67,23 +65,31 @@ class SelectForUpdatePlugin : PluginAdapter() {
 
                     JavaClientGeneratorConfigurationType.MixedMapper.value -> {
                         executeJavaMapperMethodGenerator(
-                            {AnnotatedSelectByPrimaryKeyForUpdateMethodGenerator(
-                                useResultMapIfAvailable = true,
-                                isSimple = false,
-                                methodName = method.name + METHOD_SUFFIX
-                            )},
-                            context, introspectedTable, interfaze
+                            {
+                                AnnotatedSelectByPrimaryKeyForUpdateMethodGenerator(
+                                    useResultMapIfAvailable = true,
+                                    isSimple = false,
+                                    methodName = method.name + METHOD_SUFFIX,
+                                )
+                            },
+                            context,
+                            introspectedTable,
+                            interfaze,
                         )
                     }
 
                     JavaClientGeneratorConfigurationType.AnnotatedMapper.value -> {
                         executeJavaMapperMethodGenerator(
-                            {AnnotatedSelectByPrimaryKeyForUpdateMethodGenerator(
-                                useResultMapIfAvailable = false,
-                                isSimple = false,
-                                methodName = method.name + METHOD_SUFFIX
-                            )},
-                            context, introspectedTable, interfaze
+                            {
+                                AnnotatedSelectByPrimaryKeyForUpdateMethodGenerator(
+                                    useResultMapIfAvailable = false,
+                                    isSimple = false,
+                                    methodName = method.name + METHOD_SUFFIX,
+                                )
+                            },
+                            context,
+                            introspectedTable,
+                            interfaze,
                         )
                     }
 
@@ -99,7 +105,7 @@ class SelectForUpdatePlugin : PluginAdapter() {
         generatorProvider: () -> AbstractJavaMapperMethodGenerator,
         context: Context,
         introspectedTable: IntrospectedTable,
-        interfaze: Interface
+        interfaze: Interface,
     ) {
         val generator = generatorProvider()
         generator.setContext(context)
@@ -107,17 +113,20 @@ class SelectForUpdatePlugin : PluginAdapter() {
         generator.addInterfaceElements(interfaze)
     }
 
-
     override fun sqlMapSelectByPrimaryKeyElementGenerated(
         element: XmlElement,
-        introspectedTable: IntrospectedTable
+        introspectedTable: IntrospectedTable,
     ): Boolean {
         val selectByPrimaryKeyForUpdate = XmlElement(element)
         selectByPrimaryKeyForUpdate.attributes.replaceAll {
-            if (it.name == "id") Attribute(
-                it.name,
-                it.value + METHOD_SUFFIX
-            ) else it
+            if (it.name == "id") {
+                Attribute(
+                    it.name,
+                    it.value + METHOD_SUFFIX,
+                )
+            } else {
+                it
+            }
         }
         selectByPrimaryKeyForUpdate.addElement(TextElement("for update"))
 
@@ -126,18 +135,22 @@ class SelectForUpdatePlugin : PluginAdapter() {
         return super.sqlMapSelectByPrimaryKeyElementGenerated(element, introspectedTable)
     }
 
-    override fun sqlMapDocumentGenerated(document: Document, introspectedTable: IntrospectedTable): Boolean {
+    override fun sqlMapDocumentGenerated(
+        document: Document,
+        introspectedTable: IntrospectedTable,
+    ): Boolean {
         val elements = elementsToAdd.getOrElse(introspectedTable.fullyQualifiedTable) { mutableListOf() }
         elements.forEach { document.rootElement.addElement(it) }
         return super.sqlMapDocumentGenerated(document, introspectedTable)
     }
 
-    private fun storeElementToAdd(elementToAdd: XmlElement, introspectedTable: IntrospectedTable) {
+    private fun storeElementToAdd(
+        elementToAdd: XmlElement,
+        introspectedTable: IntrospectedTable,
+    ) {
         if (!elementsToAdd.containsKey(introspectedTable.fullyQualifiedTable)) {
             elementsToAdd[introspectedTable.fullyQualifiedTable] = mutableListOf()
         }
         elementsToAdd.getValue(introspectedTable.fullyQualifiedTable).add(elementToAdd)
     }
-
 }
-

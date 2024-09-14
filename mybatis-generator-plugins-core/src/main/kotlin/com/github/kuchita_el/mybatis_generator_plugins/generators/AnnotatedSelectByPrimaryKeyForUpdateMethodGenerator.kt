@@ -8,8 +8,11 @@ import org.mybatis.generator.api.dom.java.Method
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedSelectByPrimaryKeyMethodGenerator
 import org.mybatis.generator.internal.util.StringUtility.escapeStringForJava
 
-internal class AnnotatedSelectByPrimaryKeyForUpdateMethodGenerator(private val useResultMapIfAvailable: Boolean, private val isSimple: Boolean, private val methodName: String) : AnnotatedSelectByPrimaryKeyMethodGenerator(useResultMapIfAvailable, isSimple) {
-
+internal class AnnotatedSelectByPrimaryKeyForUpdateMethodGenerator(
+    private val useResultMapIfAvailable: Boolean,
+    private val isSimple: Boolean,
+    private val methodName: String,
+) : AnnotatedSelectByPrimaryKeyMethodGenerator(useResultMapIfAvailable, isSimple) {
     override fun addInterfaceElements(interfaze: Interface) {
         val method = Method(methodName)
         method.visibility = JavaVisibility.PUBLIC
@@ -29,14 +32,18 @@ internal class AnnotatedSelectByPrimaryKeyForUpdateMethodGenerator(private val u
         interfaze.addMethod(method)
     }
 
-    override fun addMapperAnnotations(interfaze: Interface, method: Method) {
+    override fun addMapperAnnotations(
+        interfaze: Interface,
+        method: Method,
+    ) {
         interfaze.addImportedType(FullyQualifiedJavaType("org.apache.ibatis.annotations.Select"))
         val selectAnnotation = buildSelectForUpdateAnnotation()
         selectAnnotation.forEach { method.annotations.add(it) }
 
         if (useResultMapIfAvailable) {
-            if (introspectedTable.rules.generateBaseResultMap()
-                || introspectedTable.rules.generateResultMapWithBLOBs()) {
+            if (introspectedTable.rules.generateBaseResultMap() ||
+                introspectedTable.rules.generateResultMapWithBLOBs()
+            ) {
                 addResultMapAnnotation(method)
             } else {
                 addAnnotatedResults(interfaze, method, introspectedTable.nonPrimaryKeyColumns)
@@ -47,11 +54,16 @@ internal class AnnotatedSelectByPrimaryKeyForUpdateMethodGenerator(private val u
     }
 
     private fun addResultMapAnnotation(method: Method) {
-        val annotation = "@ResultMap(\"%s.%s\")"
-            .format(
-                introspectedTable.myBatis3SqlMapNamespace,
-                if (introspectedTable.rules.generateResultMapWithBLOBs()) introspectedTable.resultMapWithBLOBsId else introspectedTable.baseResultMapId
-            )
+        val annotation =
+            "@ResultMap(\"%s.%s\")"
+                .format(
+                    introspectedTable.myBatis3SqlMapNamespace,
+                    if (introspectedTable.rules.generateResultMapWithBLOBs()) {
+                        introspectedTable.resultMapWithBLOBsId
+                    } else {
+                        introspectedTable.baseResultMapId
+                    },
+                )
         method.addAnnotation(annotation)
     }
 
@@ -71,6 +83,6 @@ internal class AnnotatedSelectByPrimaryKeyForUpdateMethodGenerator(private val u
         val endOfAnnotation = "})"
 
         return initial + fromClause + whereClause + forUpdateClause +
-                endOfAnnotation
+            endOfAnnotation
     }
 }
