@@ -24,7 +24,8 @@ class SelectForUpdatePluginTest {
     inner class MyBatis3AnnotatedTest {
         @Test
         fun トランザクション内でselectForUpdateを呼び出したら行ロックを獲得すること() {
-            val connection = getConnection(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
+            val connection =
+                getConnection(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
 
             openSqlSession(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
                 .use { session ->
@@ -52,7 +53,8 @@ class SelectForUpdatePluginTest {
     inner class MyBatis3MixedTest {
         @Test
         fun トランザクション内でselectForUpdateを呼び出したら行ロックを獲得すること() {
-            val connection = getConnection(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
+            val connection =
+                getConnection(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
 
             openSqlSession(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
                 .use { session ->
@@ -80,7 +82,8 @@ class SelectForUpdatePluginTest {
     inner class MyBatis3XMLTest {
         @Test
         fun トランザクション内でselectForUpdateを呼び出したら行ロックを獲得すること() {
-            val connection = getConnection(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
+            val connection =
+                getConnection(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
 
             openSqlSession(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
                 .use { session ->
@@ -108,7 +111,8 @@ class SelectForUpdatePluginTest {
     inner class MyBatis3SimpleAnnotatedTest {
         @Test
         fun トランザクション内でselectForUpdateを呼び出したら行ロックを獲得すること() {
-            val connection = getConnection(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
+            val connection =
+                getConnection(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
 
             openSqlSession(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
                 .use { session ->
@@ -136,7 +140,8 @@ class SelectForUpdatePluginTest {
     inner class MyBatis3SimpleXMLTest {
         @Test
         fun トランザクション内でselectForUpdateを呼び出したら行ロックを獲得すること() {
-            val connection = getConnection(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
+            val connection =
+                getConnection(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
 
             openSqlSession(postgres.driverClassName, postgres.jdbcUrl, postgres.username, postgres.password)
                 .use { session ->
@@ -178,7 +183,8 @@ class SelectForUpdatePluginTest {
 
         @JvmStatic
         fun insertTestData(connection: Connection) {
-            connection.prepareStatement("""
+            connection.prepareStatement(
+                """
                 insert into 
                     member(member_id, name, created_at, updated_at)
                 values
