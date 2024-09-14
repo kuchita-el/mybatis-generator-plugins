@@ -183,19 +183,21 @@ class SelectForUpdatePluginTest {
 
         @JvmStatic
         fun insertTestData(connection: Connection) {
-            connection.prepareStatement(
-                """
-                insert into 
-                    member(member_id, name, created_at, updated_at)
-                values
-                    (?, ?, ?, ?)""".trimIndent()
-            ).use {
-                it.setString(1, memberId)
-                it.setString(2, name)
-                it.setTimestamp(3, Timestamp.from(createdAt.atZone(ZoneId.systemDefault()).toInstant()))
-                it.setTimestamp(4, Timestamp.from(updatedAt.atZone(ZoneId.systemDefault()).toInstant()))
-                it.executeUpdate()
-            }
+            connection
+                .prepareStatement(
+                    """
+                    insert into 
+                        member(member_id, name, created_at, updated_at)
+                    values
+                        (?, ?, ?, ?)
+                    """.trimIndent(),
+                ).use {
+                    it.setString(1, memberId)
+                    it.setString(2, name)
+                    it.setTimestamp(3, Timestamp.from(createdAt.atZone(ZoneId.systemDefault()).toInstant()))
+                    it.setTimestamp(4, Timestamp.from(updatedAt.atZone(ZoneId.systemDefault()).toInstant()))
+                    it.executeUpdate()
+                }
         }
 
         @JvmStatic
