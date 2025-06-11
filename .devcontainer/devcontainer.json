@@ -1,0 +1,12 @@
+{
+  "name": "mybatis-generator-plugin",
+  "image": "mcr.microsoft.com/devcontainers/java:1-21-bookworm",
+  "customizations": {
+    "jetbrains": {
+      "backend": "IntelliJ",
+      "plugins" : [
+        "com.nbadal.ktlint"
+      ]
+    }
+  }
+}
