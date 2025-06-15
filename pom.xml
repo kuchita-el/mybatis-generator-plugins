@@ -59,7 +59,7 @@
                 <version>${maven.ktlint.plugin.version}</version>
                 <executions>
                     <execution>
-                        <id>format-and-check</id>
+                        <id>check</id>
                         <goals>
                             <goal>check</goal>
                         </goals>
