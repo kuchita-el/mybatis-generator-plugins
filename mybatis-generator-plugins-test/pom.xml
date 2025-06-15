@@ -168,6 +168,14 @@
 					<skip>true</skip>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>com.github.gantsign.maven</groupId>
+				<artifactId>ktlint-maven-plugin</artifactId>
+				<configuration>
+					<!-- このプロジェクトのソースファイルはMyBatis Generator Pluginで生成したソースファイルだけなので、Linterの対象外とする。 -->
+					<includeSources>false</includeSources>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>

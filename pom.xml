@@ -30,7 +30,6 @@
         <junit.bom.version>5.11.0</junit.bom.version>
         <testcontainer.version>1.20.1</testcontainer.version>
         <postgresql.version>42.7.7</postgresql.version>
-        <ktlint.cli.version>1.3.1</ktlint.cli.version>
 
         <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.5.0</maven.surefire.plugin.version>
@@ -39,7 +38,7 @@
         <maven.javadoc.plugin.version>3.10.0</maven.javadoc.plugin.version>
         <maven.deploy.plugin.version>3.1.3</maven.deploy.plugin.version>
         <maven.wrapper.plugin.version>3.3.2</maven.wrapper.plugin.version>
-        <maven.antrun.plugin.version>3.1.0</maven.antrun.plugin.version>
+        <maven.ktlint.plugin.version>3.5.0</maven.ktlint.plugin.version>
     </properties>
     <repositories>
         <repository>
@@ -55,50 +54,17 @@
                 <version>${maven.wrapper.plugin.version}</version>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>${maven.antrun.plugin.version}</version>
+                <groupId>com.github.gantsign.maven</groupId>
+                <artifactId>ktlint-maven-plugin</artifactId>
+                <version>${maven.ktlint.plugin.version}</version>
                 <executions>
                     <execution>
-                        <id>ktlint</id>
-                        <phase>verify</phase>
-                        <configuration>
-                            <target name="ktlint">
-                                <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true"
-                                      classpathref="maven.plugin.classpath" classname="com.pinterest.ktlint.Main">
-                                    <jvmarg value="--add-opens=java.base/java.lang=ALL-UNNAMED"/>
-                                    <arg value="src/**/*.kt"/>
-                                </java>
-                            </target>
-                        </configuration>
+                        <id>check</id>
                         <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>ktlint-format</id>
-                        <configuration>
-                            <target name="ktlint">
-                                <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true"
-                                      classpathref="maven.plugin.classpath" classname="com.pinterest.ktlint.Main">
-                                    <jvmarg value="--add-opens=java.base/java.lang=ALL-UNNAMED"/>
-                                    <arg value="-F"/>
-                                    <arg value="src/**/*.kt"/>
-                                </java>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
+                            <goal>check</goal>
                         </goals>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.pinterest.ktlint</groupId>
-                        <artifactId>ktlint-cli</artifactId>
-                        <version>${ktlint.cli.version}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
         <pluginManagement>

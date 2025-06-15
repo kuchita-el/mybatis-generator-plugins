@@ -1,0 +1,15 @@
+{
+  "name": "mybatis-generator-plugin",
+  "image": "mcr.microsoft.com/devcontainers/java:1-21-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "customizations": {
+    "jetbrains": {
+      "backend": "IntelliJ",
+      "plugins" : [
+        "com.nbadal.ktlint"
+      ]
+    }
+  }
+}
